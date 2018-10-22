@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>x</title>
+</head>
+<body>
+  <script>
+    'use strict';
+    
+    
+    function createForm(array) {
+                const body = document.documentElement.lastChild;
+                const hr = document.createElement('hr');
+                document.body.insertBefore(hr, body.lastChild)
+				var form = document.createElement('form');
+                form.method = "POST";
+                form.action = "http://fe.it-academy.by/TestForm.php";
+                form.style.padding = '10px';
+                array.forEach(function (v) {
+					const label = document.createElement("label");
+					label.textContent = v.label;
+					var input;
+                    const variants = v.variants;
+					switch (v.kind) {
+						case 'longtext':
+                            input = document.createElement('input')
+                            input.type = 'text'
+                            input.name = v.name
+                            input.style.width = '453px'
+                            f()
+                            break;
+						case 'shorttext':
+                           input = document.createElement('input')
+							input.type = 'text'
+							input.name = v.name
+							input.style.width = '80px'
+                            f()
+							break;
+						case 'number':
+                            input = document.createElement('input')
+                            input.type = 'number'
+                            input.name = v.name
+                            f()
+                            break;
+                        case 'combo':
+                            input = document.createElement('select')
+                            input.name = v.name
+							variants.forEach( function (n) {
+							    const option = document.createElement('option');
+							    option.value = n.value;
+							    option.textContent = n.text;
+							    input.appendChild(option);
+                               })
+                            f()
+                            break;
+                        case 'radio':
+                            variants.forEach( function (n) {
+                                input = document.createElement('input');
+                                input.type = 'radio';
+                                input.name = v.name;
+								 input.value = n.value;
+								 input.textContent = n.text;
+								 label.appendChild(input);
+                            })
+                            f()
+                            break;
+                        case 'check':
+                            input = document.createElement('input')
+                            input.type = 'checkbox'
+                            input.name = v.name
+							input.setAttribute('checked', true)
+                            f()
+                            break;
+                        case 'memo':
+                            input = document.createElement('textarea')
+                            input.name = v.name
+							 input.style.display = 'block'
+							 input.style.width = '600px'
+                            f()
+                            break;
+						case 'submit':
+                            var submit = document.createElement('input')
+                            submit.type = 'submit'
+                            submit.value = v.label.replace(':', '')
+                            form.appendChild(submit)
+                           break;
+
+                    }
+                    function f() {
+                        input.style.marginBottom = '10px';
+                        input.style.marginLeft = '10px';
+                        label.appendChild(input);
+                        form.appendChild(label);
+					}
+
+                    const br = document.createElement('br');
+                    form.appendChild(br);
+
+                });
+				document.body.insertBefore(form,body.lastChild);
+            }
+
+
+
+    // AJAX запрос с обработкой ошибки загрузки файла
+    // средствами нативного JavaScript
+    function reqListener() {
+      if (this.status === 200) { // если запрос выполнен успешно, то статус 200 OK
+        const response = JSON ? JSON.parse(this.responseText) : eval("(" + this.responseText + ")");
+        createForm(response);
+      }
+      else { // не 200 - значит вывести статус и текст ошибки
+        document.body.innerHTML = this.status + ' ' + this.statusText;
+      }
+    }
+
+
+    var formDef1 = new XMLHttpRequest();
+    formDef1.onload = reqListener;
+    // открыть соединение
+    formDef1.open("get", "formDef1.json", true);
+    // отправить запрос
+    formDef1.send();
+
+    
+    var formDef2 = new XMLHttpRequest();
+    formDef2.onload = reqListener;
+    // открыть соединение
+    formDef2.open("get", "formDef2.json", true);
+    // отправить запрос
+    formDef2yo.send();
+  </script>
+</body>
+</html>

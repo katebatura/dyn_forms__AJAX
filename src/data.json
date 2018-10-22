@@ -1,0 +1,12 @@
+[{
+    "result": {
+        "message": "hello my dear friend"
+    }
+},
+{
+    "result": {
+        "message": "goodbye my love",
+        "fire": "no"
+    }
+}
+]
